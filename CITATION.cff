@@ -1,0 +1,65 @@
+cff-version: 1.2.0
+message: >-
+  If you use this software, please cite the accompanying manuscript
+  (preferred-citation below), which is archived on Zenodo.
+title: >-
+  Signed Context Decomposition: reference implementation for
+  "Amplitude-Tilt Complementarity and the Gauge Trace Anomaly as a
+  Signed Context Decomposition"
+abstract: >-
+  Reference implementation of the signed context decomposition introduced in the
+  accompanying technical note. Computes the exact invariants of a signed L1
+  context - the signed net, the gross magnitude, and the cancellation index
+  kappa = 1 - |net|/gross - reproduces the signed gauge-sector decomposition of
+  the Standard Model high-temperature trace-anomaly coefficient, and exhibits
+  the algebraic blindness of a net-only observable to the gross magnitude and to
+  the cancellation.
+type: software
+authors:
+  - given-names: Elias
+    family-names: De Jesús
+    orcid: https://orcid.org/0009-0007-0190-9143
+    email: dejesuselias10@gmail.com
+    affiliation: Independent Researcher
+version: 1.0.0
+date-released: '2026-07-28'
+license: MIT
+keywords:
+  - signed context decomposition
+  - cancellation index
+  - trace anomaly
+  - Standard Model couplings
+  - primordial perturbations
+  - spectral tilt
+  - Thales partition
+  - diagnostic methodology
+preferred-citation:
+  type: report
+  title: >-
+    Amplitude-Tilt Complementarity and the Gauge Trace Anomaly as a Signed
+    Context Decomposition: A Partition-Diagnostic Reading of the Turok-Boyle
+    Primordial Spectrum
+  authors:
+    - given-names: Elias
+      family-names: De Jesús
+      orcid: https://orcid.org/0009-0007-0190-9143
+      affiliation: Independent Researcher
+  year: 2026
+  institution:
+    name: Zenodo
+  doi: 10.5281/zenodo.20701311
+  url: https://doi.org/10.5281/zenodo.20701311
+  notes: >-
+    Version DOI for the exact archived manuscript accompanying this repository.
+    The DOI resolving to the latest revision is 10.5281/zenodo.20681973.
+references:
+  - type: article
+    title: A Minimal Explanation of the Primordial Cosmological Perturbations
+    authors:
+      - given-names: Neil
+        family-names: Turok
+      - given-names: Latham
+        family-names: Boyle
+    year: 2023
+    url: https://arxiv.org/abs/2302.00344
+    notes: Source of the Standard Model couplings and trace-anomaly coefficients used here.

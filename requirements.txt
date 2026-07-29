@@ -1,0 +1,5 @@
+# Runtime dependency
+numpy>=1.21
+
+# Test-only (needed for: pytest tests)
+pytest>=7.0
