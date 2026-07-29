@@ -103,8 +103,8 @@ The manuscript itself is archived on Zenodo rather than committed here; see `pap
 Python 3.9 or newer and NumPy are all that is required.
 
 ```bash
-git clone https://github.com/<user>/signed-context-decomposition.git
-cd signed-context-decomposition
+git clone https://github.com/innerlightr-wq/signed-context-decomposition-cosmology.git
+cd signed-context-decomposition-cosmology
 pip install -r requirements.txt
 ```
 
