@@ -16,9 +16,8 @@ Full reference:
   Anomaly as a Signed Context Decomposition: A Partition-Diagnostic Reading of the Turok–Boyle
   Primordial Spectrum.*
 
-The numerical inputs are reproduced by the root `signedctx.py`, which accompanies the current
-revision. (`src/signedctx.py` is the earlier implementation, retained for the superseded version;
-see the note in the top-level `README.md`.)
+The numerical inputs are reproduced by `signedctx.py` at the repository root, which is the single
+canonical implementation; see [`../docs/CODE_ARCHITECTURE.md`](../docs/CODE_ARCHITECTURE.md).
 
 ## Provenance of the physical inputs
 
