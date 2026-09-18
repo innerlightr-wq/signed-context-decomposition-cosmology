@@ -37,6 +37,19 @@ kappa = 2 · min(P, N) / (P + N)
 
 Both forms are checked against each other by the validation routine.
 
+> **What `kappa` already is.** Reading `c` as a discrete signed measure, `net` is its total signed
+> mass and `gross` its total variation mass (Jordan decomposition). And `gross/abs(net)` is the
+> classical **condition number of a sum** — the factor in the standard error bound for
+> floating-point summation — so
+>
+> ```
+> cond = gross/abs(net) = 1/(1 − kappa)        kappa = 1 − 1/cond
+> ```
+>
+> Both directions are exact: `kappa` is a **bounded reparameterization of a textbook quantity**,
+> not a new index, and its only advantage over `cond` is that it lies in `[0,1]`. See
+> [`docs/LITERATURE_CONTEXT.md`](docs/LITERATURE_CONTEXT.md) §3.
+
 Interpretation:
 
 - `kappa = 0` — all nonzero channels have the same sign.
@@ -52,7 +65,11 @@ specified renormalization scale and perturbative truncation.
 
 ## Scientific motivation
 
-Turok and Boyle use the high-temperature Standard Model trace-anomaly coefficient
+Turok and Boyle use the high-temperature Standard Model trace-anomaly coefficient — their Eq. (4),
+which **they in turn quote from Arnold & Zhai (1995), Eq. (5.1)**, with the Planck-scale couplings
+taken from Buttazzo et al. (2013) via their Ref. [37]. Every number below is a function of those
+imported inputs; see [`docs/NOVELTY_AND_PROVENANCE.md`](docs/NOVELTY_AND_PROVENANCE.md) §2 for the
+full input table.
 
 ```
 c_beta = (125/108)·α_Y²  −  (95/72)·α_2²  −  (49/6)·α_3²
@@ -79,7 +96,9 @@ gross =  0.003840
 kappa =  0.1975
 ```
 
-The strong channel supplies about 95% of the magnitude of the net.
+The strong channel supplies about 95% of the magnitude of the net — this is **Turok and Boyle's own
+figure** ("The SU(3) contribution comprises 95% of the total"), reproduced here, not computed
+independently.
 
 The note studies two different forms of observable blindness.
 
@@ -98,6 +117,12 @@ Two decompositions with equal net produce the same amplitude, regardless of how 
 sign-opposed structure lies underneath. The two blindnesses are logically independent: an
 *odd* observable would resolve the sign while remaining blind to the decomposition, which
 `sign_blindness(context, power=1)` demonstrates.
+
+Amplitude and tilt are also **functionally** independent on the three-coupling space: holding
+`c_beta` fixed while moving `α_3` changes the tilt, and holding `α_3` fixed while moving `α_2`
+changes the amplitude. That is a statement about the **observation map of the model family**, not a
+degeneracy among physically realized states — at the Standard Model Planck point the three
+couplings are determined, not free.
 
 ### 2. Tilt blindness
 
@@ -131,6 +156,15 @@ The positive factors and beta combinations are
 | `U(1)_Y` | 25/144 | −20/3 |
 | `SU(2)_L` | 19/48 | 10/3 |
 | `SU(3)_c` | 7/6 | 7 |
+
+> **Convention.** These `b_a` follow from the group data Turok and Boyle state explicitly
+> (`U(1)_Y`: `C_A = 0`, `S_F = Σ Y_i² = 5`; `SU(2)_L`: `C_A = 2`, `S_F = 3`; `SU(3)_c`: `C_A = 3`,
+> `S_F = 3`). They are the **Arnold–Zhai gauge-plus-fermion combination**, which coincides with the
+> one-loop beta coefficient only when no *fundamental* scalar contributes: the textbook Standard
+> Model values are `−41/6` and `19/6`, differing by exactly the `1/6` Higgs-doublet term. That
+> omission is consistent with Turok and Boyle's premise that the Higgs doublet is emergent rather
+> than fundamental. No equation or value here is changed by this observation; it is recorded so a
+> reader checking against a textbook is not misled.
 
 Because `P_a` and `α_a²` are positive, the sign of each gauge-factor contribution is carried
 by `−b_a`. The `U(1)_Y` term is positive because an abelian factor has no gauge
@@ -193,10 +227,19 @@ kappa_refined > kappa_original
 Consequently `kappa` is monotone non-decreasing under refinement. Merging opposite-sign
 channels has the reverse effect and decreases it.
 
+These are **elementary**: net-invariance is finite additivity, and the gross statement is
+`abs(a+b) ≤ abs(a) + abs(b)` together with its equality case. They are retained as explicit
+bookkeeping, not offered as deep results.
+
 **No decomposition-free value.** For a fixed nonzero net, decompositions exist with `kappa`
 arbitrarily close to 1; coarsening the whole vector to a single channel gives `kappa = 0`.
 `realize_kappa(net, target)` constructs a two-component decomposition hitting any target in
-`[0, 1)` at fixed net. Therefore:
+`[0, 1)` at fixed net. **These constructions are algebraic witnesses, not physical states:** an
+arbitrary two-component signed vector, a single-channel context, and a global sign flip are none of
+them physically realizable Standard Model decompositions. The one genuinely physical comparison in
+this repository is level 1 versus level 2 (a legitimate refinement of the same expression at fixed
+order and scale) and the change of renormalization scale. The labels for every witness are
+tabulated in [`docs/NOVELTY_AND_PROVENANCE.md`](docs/NOVELTY_AND_PROVENANCE.md) §6. Therefore:
 
 > `kappa` is a resolution-relative coordinate, not an invariant of the underlying physical
 > system.
@@ -242,6 +285,13 @@ assumptions connecting spatial wavelength to renormalization-group running, whic
 state they have not verified. This repository does not strengthen the epistemic status of that
 argument.
 
+For completeness: the Turok–Boyle paper is an arXiv preprint with no journal version located, and
+its central ingredient — dimension-zero scalar fields — has since been criticized in the refereed
+literature (J. M. Cline and A. Hell, *Pathologies of dimension-zero scalar fields*,
+Phys. Rev. D **114**, 045022, 2026). **This repository takes no position either way**; the
+diagnostic below is about what the observables can resolve, not about whether the mechanism is
+correct.
+
 **Structural interpretation.** Diagnostic readings rather than physical results: amplitude and
 tilt as two different blindnesses; `kappa` as a resolution-depth coordinate; the
 level-1-to-level-2 change in `kappa` as a measure of sign structure hidden by a coarser
@@ -271,6 +321,27 @@ interpretations to signed data.
 
 ---
 
+## Relation to prior work
+
+A provenance audit (September 2026) is recorded in
+[`docs/NOVELTY_AND_PROVENANCE.md`](docs/NOVELTY_AND_PROVENANCE.md) and
+[`docs/LITERATURE_CONTEXT.md`](docs/LITERATURE_CONTEXT.md), with verified records in
+[`references.bib`](references.bib). In summary:
+
+| part | status |
+|---|---|
+| `net`, `gross` | total signed mass and total variation mass of a Jordan decomposition — **classical** |
+| `kappa` | bounded reparameterization of the **condition number of a sum** — **known / reparameterized** |
+| refinement monotonicity | the **triangle inequality** and its equality case — **elementary** |
+| amplitude blindness | standard **non-identifiability** of a many-to-one observation map — **classical** |
+| `c_beta`, the couplings, the amplitude and tilt relations, the 95% figure | **imported** from Turok–Boyle, and behind them Arnold–Zhai and Buttazzo et al. |
+| the gauge/matter level-2 split | this repository's refinement of the one-loop coefficient; legitimate at that order, diagrammatic bookkeeping rather than separately observable |
+| the combined diagnostic applied to this coefficient | **no equivalent analysis was identified in the literature reviewed** (Turok–Boyle has five citations and none performs one); no priority is claimed |
+
+So the mathematics is classical, the physics is wholly imported, and what the repository
+contributes is the **diagnostic reading**: a systematic account of what these two observables can
+and cannot resolve about the decomposition beneath them.
+
 ## Repository organization
 
 ```
@@ -278,10 +349,24 @@ README.md
 LICENSE
 CITATION.cff
 requirements.txt
-signedctx.py
+references.bib            verified bibliography for the provenance audit
+docs/
+    NOVELTY_AND_PROVENANCE.md   claim-by-claim matrix, physics-input and invariance tables
+    LITERATURE_CONTEXT.md       provenance chain and the classical mathematics
+signedctx.py              current implementation (accompanies the current manuscript)
+src/signedctx.py          EARLIER implementation, kept for the superseded manuscript
+examples/                 three runnable demonstrations (import from src/)
 tests/
-    test_signedctx.py
+    conftest.py
+    test_signedctx.py     exercises src/signedctx.py
 ```
+
+> **Note on the two implementations.** The root `signedctx.py` is the version accompanying the
+> current manuscript and provides the invariance-audit API (`level1`, `level2`, `refine`,
+> `refinement_report`, `realize_kappa`, `sign_blindness`, `tilt`). `src/signedctx.py` is the
+> earlier implementation for the superseded manuscript and does not provide those functions.
+> `pytest tests` and the `examples/` scripts currently import from `src/`; the current
+> implementation is checked by its own `python signedctx.py --validate` self-check.
 
 The manuscript is archived on Zenodo rather than committed as an authoritative publication
 file.

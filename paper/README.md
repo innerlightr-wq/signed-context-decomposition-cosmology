@@ -2,22 +2,39 @@
 
 The manuscript is archived on Zenodo and is **not** committed to this repository.
 
-- **Archived version accompanying this repository (cite this):**
-  <https://doi.org/10.5281/zenodo.20701311>
-- **Latest revision (concept DOI, always resolves to the newest version):**
-  <https://doi.org/10.5281/zenodo.20681973>
+- **Current revision accompanying this repository (cite this):**
+  <https://doi.org/10.5281/zenodo.21780964>
 
 Full reference:
 
-> De Jesús, Elias (2026). *Amplitude–Tilt Complementarity and the Gauge Trace Anomaly as a
-> Signed Context Decomposition: A Partition-Diagnostic Reading of the Turok–Boyle Primordial
-> Spectrum.* Technical Note. Zenodo. https://doi.org/10.5281/zenodo.20701311
+> De Jesús, Elias (2026). *Two Blind Observables on a Signed Gauge Decomposition: An
+> Invariance-Audited Diagnostic Reading of the Turok–Boyle Primordial Spectrum.* Technical Note.
+> Zenodo. https://doi.org/10.5281/zenodo.21780964
 
-The numerical inputs reproduced by `src/signedctx.py` are Table 1 of that note, whose
-underlying Standard Model couplings come from:
+- **Superseded earlier version** (different title, do not cite for the current content):
+  <https://doi.org/10.5281/zenodo.20701311> — *Amplitude–Tilt Complementarity and the Gauge Trace
+  Anomaly as a Signed Context Decomposition: A Partition-Diagnostic Reading of the Turok–Boyle
+  Primordial Spectrum.*
 
-> N. Turok and L. Boyle, *A Minimal Explanation of the Primordial Cosmological Perturbations*,
-> [arXiv:2302.00344](https://arxiv.org/abs/2302.00344) [hep-ph] (2023).
+The numerical inputs are reproduced by the root `signedctx.py`, which accompanies the current
+revision. (`src/signedctx.py` is the earlier implementation, retained for the superseded version;
+see the note in the top-level `README.md`.)
 
-If you later prefer to ship the PDF with the code, place it here as `manuscript.pdf` and
-update the repository organization section of the top-level `README.md`.
+## Provenance of the physical inputs
+
+The Standard Model couplings and the trace-anomaly coefficient are **not** derived here. The chain is
+
+    this repository
+        <- N. Turok and L. Boyle, "A Minimal Explanation of the Primordial Cosmological
+           Perturbations", arXiv:2302.00344 [hep-ph] (2023), Eq. (4)
+              <- P. B. Arnold and C. X. Zhai, Phys. Rev. D 51 (1995) 1906, Eq. (5.1)
+                 -- the trace-anomaly coefficient itself
+              <- D. Buttazzo et al., JHEP 12 (2013) 089
+                 -- the Planck-scale gauge couplings
+
+See [`../docs/NOVELTY_AND_PROVENANCE.md`](../docs/NOVELTY_AND_PROVENANCE.md) for the full
+input-to-use table and [`../docs/LITERATURE_CONTEXT.md`](../docs/LITERATURE_CONTEXT.md) for the
+provenance discussion.
+
+If you later prefer to ship the PDF with the code, place it here as `manuscript.pdf` and update the
+repository organization section of the top-level `README.md`.
