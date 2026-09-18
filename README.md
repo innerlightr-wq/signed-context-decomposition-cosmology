@@ -349,24 +349,24 @@ README.md
 LICENSE
 CITATION.cff
 requirements.txt
+conftest.py               makes `import signedctx` cwd-independent under pytest
 references.bib            verified bibliography for the provenance audit
 docs/
+    CODE_ARCHITECTURE.md        canonical implementation and import paths
     NOVELTY_AND_PROVENANCE.md   claim-by-claim matrix, physics-input and invariance tables
     LITERATURE_CONTEXT.md       provenance chain and the classical mathematics
-signedctx.py              current implementation (accompanies the current manuscript)
-src/signedctx.py          EARLIER implementation, kept for the superseded manuscript
-examples/                 three runnable demonstrations (import from src/)
+signedctx.py              THE implementation -- there is exactly one
+examples/                 three runnable demonstrations
 tests/
-    conftest.py
-    test_signedctx.py     exercises src/signedctx.py
+    test_signedctx.py     exercises signedctx.py directly
 ```
 
-> **Note on the two implementations.** The root `signedctx.py` is the version accompanying the
-> current manuscript and provides the invariance-audit API (`level1`, `level2`, `refine`,
-> `refinement_report`, `realize_kappa`, `sign_blindness`, `tilt`). `src/signedctx.py` is the
-> earlier implementation for the superseded manuscript and does not provide those functions.
-> `pytest tests` and the `examples/` scripts currently import from `src/`; the current
-> implementation is checked by its own `python signedctx.py --validate` self-check.
+> **One implementation, one import.** `signedctx.py` at the repository root is canonical, and
+> `import signedctx` resolves to it for users, tests and examples alike. An earlier layout also
+> carried an older copy under `src/`, which `tests/conftest.py` forced onto `sys.path`; the test
+> suite therefore exercised the stale copy while reporting success. Both the duplicate and the path
+> manipulation have been removed, and a test now guards against recurrence. No number changed:
+> see [`docs/CODE_ARCHITECTURE.md`](docs/CODE_ARCHITECTURE.md).
 
 The manuscript is archived on Zenodo rather than committed as an authoritative publication
 file.
@@ -375,12 +375,13 @@ file.
 
 ## Installation
 
-Python 3.9 or newer and NumPy are required.
+Python 3.9 or newer and NumPy are required. **No installation or packaging step is needed** —
+`signedctx.py` is a single top-level module, imported directly from the repository root.
 
 ```bash
 git clone https://github.com/innerlightr-wq/signed-context-decomposition-cosmology.git
 cd signed-context-decomposition-cosmology
-pip install -r requirements.txt
+pip install -r requirements.txt        # numpy (runtime) and pytest (tests only)
 ```
 
 No packaging step is required.
@@ -477,8 +478,12 @@ monotonicity theorem, the two blindnesses, the edge cases, and the tilt value, a
 Run the tests with:
 
 ```bash
-pytest tests -q
+pytest -q
 ```
+
+Every test imports the canonical top-level `signedctx` module — the same import documented above —
+and the suite works from any working directory. Layout and import details:
+[`docs/CODE_ARCHITECTURE.md`](docs/CODE_ARCHITECTURE.md).
 
 ---
 

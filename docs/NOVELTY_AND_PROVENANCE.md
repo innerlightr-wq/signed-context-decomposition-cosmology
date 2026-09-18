@@ -209,15 +209,18 @@ downgrades, only the one qualification above plus the citations.
 
 Found while reading, and reported because they affect what a reader is actually running:
 
-1. **Two different implementations are shipped.** Root `signedctx.py` (587 lines, "v2") implements
-   the current manuscript. `src/signedctx.py` (523 lines) implements the **superseded** manuscript
-   and lacks the entire invariance-audit API — no `level1`, `level2`, `refine`, `coarsen`,
-   `refinement_report`, `kappa_span`, `realize_kappa`, `sign_blindness`, `tilt`,
-   `beta_coefficient`, `positive_factors`.
-2. **The test suite exercises the stale copy.** `tests/conftest.py` and all three `examples/`
-   insert `src/` on `sys.path`. `pytest tests` passes **44 tests** — against the superseded
-   implementation. The current implementation is covered only by its own `--validate` CLI
-   self-check, which passes all 12 sections.
+1. **Two different implementations were shipped — FIXED.** Root `signedctx.py` (587 lines)
+   implements the current manuscript; `src/signedctx.py` (523 lines) implemented the **superseded**
+   manuscript and lacked the entire invariance-audit API. A function-by-function comparison found
+   every `src`-only name to be a rename of a canonical function, no functionality unique to `src/`,
+   and **no mathematical disagreement** — `net_gross_kappa` agreed exactly, including the
+   `gross = 0 → nan` edge case. `src/signedctx.py` has been deleted.
+2. **The test suite exercised the stale copy — FIXED.** `tests/conftest.py` and all three
+   `examples/` inserted `src/` on `sys.path`, so `import signedctx` resolved to the stale file under
+   pytest and to the canonical file interactively. The 44 passing tests never touched `level1`,
+   `level2`, `refine`, `realize_kappa` or `tilt`. The path manipulation is gone, the suite now
+   imports the canonical module (62 tests), and a guard test fails if a duplicate ever shadows it
+   again. See [`CODE_ARCHITECTURE.md`](CODE_ARCHITECTURE.md).
 3. **`paper/README.md` contradicted `README.md` — FIXED in this audit.** It named the superseded
    DOI `10.5281/zenodo.20701311` as "cite this", gave a different concept DOI
    `10.5281/zenodo.20681973`, and used the old title. It now points at
@@ -226,9 +229,9 @@ Found while reading, and reported because they affect what a reader is actually 
 4. **README "Repository organization" omitted `src/`, `examples/`, `requirements.txt` and
    `tests/conftest.py` — FIXED**, together with a note distinguishing the two implementations.
 
-Items 1 and 2 are **not** fixed here: consolidating or retiring `src/signedctx.py` and
-repointing the test suite at the current implementation is a code change, outside the scope of a
-provenance audit, and is left to the author.
+All four items are now addressed. Items 1 and 2 were resolved by a separate code-consolidation
+change, which altered no equation and no numerical value: the self-check output of
+`python signedctx.py` is byte-identical before and after.
 
 ## 10. Unresolved questions
 
